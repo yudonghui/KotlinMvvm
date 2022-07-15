@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KotlinMvvm</string>
+    <string name="text_age">%s岁</string>
+</resources>
