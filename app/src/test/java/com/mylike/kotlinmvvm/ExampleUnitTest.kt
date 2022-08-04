@@ -12,20 +12,8 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        var testEntity = TestEntity()
-        testEntity.let {
-            it.add()
-            10
-        }
-        testEntity.also {
-            it.age = 9
-        }.age = 10
-        println("also之后 ${testEntity.age}")
-        testEntity.run {
-
-        }
-        testEntity.apply {
-
-        }.age=12
+        var a: String? = null
+        var toInt = a?.toInt() ?: 0
+        println("结果：${toInt}")
     }
 }

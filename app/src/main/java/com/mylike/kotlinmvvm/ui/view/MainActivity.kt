@@ -1,6 +1,12 @@
 package com.mylike.kotlinmvvm.ui.view
 
+import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +32,7 @@ import com.mylike.kotlinmvvm.ui.viewmodel.MainViewModel
 import com.mylike.kotlinmvvm.utils.CommonUtil
 import com.mylike.kotlinmvvm.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 import kotlin.random.Random
 
 /**
@@ -57,6 +64,7 @@ class MainActivity : BaseMvvmActivity() {
         mBinding.imgRes = R.mipmap.default_header
         mBinding.imgUrl =
             "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp02%2F1Z91915023J933-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660380505&t=a4e98dd4f0fb4550db2ec3fe80a1ad6d"
+
     }
 
 
@@ -126,4 +134,41 @@ class MainActivity : BaseMvvmActivity() {
         mViewModel.infoEntity.postValue(mViewModel.infoEntity.value)
         //mBinding.executePendingBindings()
     }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    fun addQuick(view: View) {
+        var shortcutManager = getSystemService(ShortcutManager::class.java)
+        var shortcut = ShortcutInfo.Builder(this, "test_add")
+            .setShortLabel("测试添加")
+            .setIcon(Icon.createWithResource(mContext, R.mipmap.default_header))
+            .setIntent(Intent(Intent.ACTION_MAIN, null, mContext, ListActivity::class.java))
+            .build()
+        shortcutManager.dynamicShortcuts = listOf(shortcut)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    fun updateQuick(view: View) {
+        var shortcutManager = getSystemService(ShortcutManager::class.java)
+        var shortcut = ShortcutInfo.Builder(this, "test_add")
+            .setShortLabel("更新成功")
+            .setLongLabel("长更新成功")
+            .setIcon(Icon.createWithResource(mContext, R.mipmap.default_header))
+            .setIntent(
+                Intent(
+                    Intent.ACTION_MAIN,
+                    null,
+                    mContext,
+                    com.mylike.kotlinmvvm.ui.view.MainActivity::class.java
+                )
+            )
+            .build()
+        shortcutManager.updateShortcuts(listOf(shortcut))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    fun removeQuick(view: View) {
+        var shortcutManager = getSystemService(ShortcutManager::class.java)
+        shortcutManager.removeDynamicShortcuts(listOf("test_add"));//唯一的id标识
+    }
 }
+

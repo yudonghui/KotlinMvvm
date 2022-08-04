@@ -40,6 +40,7 @@ fun RecyclerView.init(
     adapter = bindAdapter
     return this
 }
+
 fun RecyclerView.init(
     layoutManger: RecyclerView.LayoutManager,
     bindAdapter: RecyclerView.Adapter<*>,
@@ -51,6 +52,7 @@ fun RecyclerView.init(
     adapter = bindAdapter
     return this
 }
+
 fun RecyclerView.init(
     layoutManger: RecyclerView.LayoutManager,
     bindAdapter: RecyclerView.Adapter<*>,
@@ -61,4 +63,10 @@ fun RecyclerView.init(
     setHasFixedSize(true)//RecyclerView的高度固定的时候设置成true。如果不固定设置成false
     adapter = bindAdapter
     return this
+}
+
+fun String.getInt(): Int {
+    if (isEmpty()) return 0
+    if (contains(".")) return toDouble().toInt()
+    return toInt()
 }
